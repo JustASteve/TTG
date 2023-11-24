@@ -1,0 +1,1 @@
+Masukan jumlah yang diinginkan pada input lalu klik button
