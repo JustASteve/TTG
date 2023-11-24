@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logika Dasar</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form1">
+            <label for="nb">Jumlah Bilangan:</label>
+            <input type="text" name="nb" id="nb">
+            <label for="nk">Jumlah Kelompok:</label>
+            <input type="text" name="nk" id="nk">
+            <button id="submit1">Kelompokan</button>
+        </div>
+        <div id="answer1"></div>
+        <br><br>
+        <div class="form2">
+            <label for="n">Jumlah Baris:</label>
+            <input type="text" name="n" id="n">
+            <button id="submit2">Buat</button>
+        </div>
+        <div id="answer2"></div>
+    </div>
+</body>
+
+<script>
+
+    $(function () {
+        $('#submit1').on("click", function () {
+            $('#answer1').empty();
+            let nb = $('#nb').val();
+            let nk = $('#nk').val();
+            let bil = [];
+            let ans = [];
+
+            for (let i = 1; i <= nb; i++) {
+                bil.push(2 * i);
+            }
+
+            let t = bil.length / nk;
+            for (let i = 0; i < nk; i++) {
+                ans.push(bil.slice(i * t, i * t + t));
+                $('#answer1').append('<div>' + bil.slice(i * t, i * t + t) + '</div>');
+            }
+
+        });
+
+        $('#submit2').on("click", function () {
+            $('#answer2').empty();
+            let n = $('#n').val();
+            for (let i = n; i > 0; i--) {
+                let x = 1 + (i - 1) * 2;
+                // console.log(x);
+                $('#answer2').append('<div>' + "*".repeat(x) + '</div>');
+            }
+        });
+    });
+</script>
+
+</html>

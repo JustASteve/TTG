@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+
+    <style>
+        #app {
+            text-align: center;
+        }
+
+        button {
+            border: 1px solid black;
+            height: 4em;
+            border-radius: 1em;
+            width: 6em;
+            color: black;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>
+            {{m}}:{{s}}.{{ms}}
+        </h1>
+        <!-- <h3>{{elapsedTime}}</h3> -->
+        <button @click="start">{{msg}}</button>
+        <button @click="stop">Stop</button>
+        <button @click='flag'>Flag</button>
+        <div style="margin-top:10px">
+            Catatan Waktu
+                <div v-for="record in records" :key="record">
+                    {{ record }}
+                </div>
+        </div>
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    run: false,
+                    msg: 'Start',
+                    elapsedTime: 0,
+                    temp: 0,
+                    m: '00',
+                    s: '00',
+                    ms: '000',
+                    records: []
+                }
+            },
+            methods: {
+                start: function () {
+                    this.run = !this.run;
+                    if (this.run) {
+                        this.msg = 'Pause';
+                        start = Date.now();
+                        timer = setInterval(() => {
+                            this.elapsedTime = Date.now() - start + this.temp;
+                            ms = this.elapsedTime % 1000;
+                            s = Math.floor((this.elapsedTime / 1000) % 60);
+                            m = Math.floor(this.elapsedTime / 60000);
+                            this.ms = ms.toString().padStart(3, '0');
+                            this.s = s.toString().padStart(2, '0');
+                            this.m = m.toString().padStart(2, '0');
+                        }, 15);
+                    }
+                    else {
+                        this.msg = "Start";
+                        this.temp = this.elapsedTime;
+                        clearInterval(timer);
+                    }
+                },
+                stop: function () {
+                    clearInterval(timer);
+                    this.m = '00';
+                    this.s = '00';
+                    this.ms = '000';
+                    this.elapsedTime = 0;
+                    this.temp = 0;
+                    this.run = false;
+                    // this.records = [];
+                },
+                flag: function () {
+                    this.records.push(this.m + ":" + this.s + "." + this.ms);
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
